@@ -165,7 +165,8 @@ jobs:
       - name: Scan for hardcoded conclusions
         run: |
           echo "Scanning for accidentally hardcoded conclusions..."
-          if grep -i "conclusion reached\|problem solved\|i was wrong" AIDENY.cbl; then
+          # Exclude the legitimate "NO CONCLUSION REACHED" status display
+          if grep -i "conclusion reached\|problem solved\|i was wrong" AIDENY.cbl | grep -iv "NO CONCLUSION"; then
             echo "CRITICAL: Hardcoded conclusion detected. This violates the specification."
             exit 1
           else
