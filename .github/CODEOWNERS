@@ -1,0 +1,35 @@
+# =============================================================
+# AIDENY — CODEOWNERS
+# Who is responsible for what in the denial engine
+# =============================================================
+#
+# Note: In the real world, nobody takes ownership of this argument.
+# In this repo, we at least try.
+
+# The denial engine itself — requires senior denier review
+AIDENY.cbl                  @cognitive-dissonance-dept
+AIDENY.jcl                  @mainframe-cope-team
+
+# The excuse table — community-driven, still needs review
+# (we can't just let any excuse in; it has to be a REAL cope)
+AIDENY.cbl                  @excuse-review-board
+
+# Infrastructure (all of it unnecessary, all of it reviewed)
+Dockerfile                  @cloud-native-denial-team
+docker-compose.yml          @cloud-native-denial-team
+Makefile                    @build-system-apologists
+k8s/                        @kubernetes-was-definitely-needed
+terraform/                  @infrastructure-of-cope
+helm/                       @helm-chart-for-190-lines-of-cobol
+
+# Documentation (more reviewers than the code has lines)
+README.md                   @cognitive-dissonance-dept @docs-team
+CONTRIBUTING.md             @community-cope-managers
+CHANGELOG.md                @nothing-ever-changes-dept
+ROADMAP.md                  @no-destination-planning
+
+# Observability (monitoring a program that does nothing)
+monitoring/                 @sre-denial-oncall
+
+# GitHub meta-config
+.github/                    @devops-for-a-joke

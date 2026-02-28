@@ -1,0 +1,58 @@
+# =============================================================
+# AIDENY — Prometheus Alerting Rules
+# Alerts for a denial engine that should never alert
+# =============================================================
+
+groups:
+  - name: aideny-denial-alerts
+    rules:
+      - alert: ConclusionDetected
+        expr: aideny_conclusion_reached > 0
+        for: 0s
+        labels:
+          severity: critical
+          team: cognitive-dissonance-dept
+        annotations:
+          summary: "CRITICAL: The denial engine has reached a conclusion"
+          description: "This should be impossible. The program is designed to never reach a conclusion. Investigate immediately."
+          runbook_url: "https://github.com/cognitive-dissonance-dept/aideny/wiki/Incident-Response-Conclusion-Detected"
+
+      - alert: SelfAwarenessDetected
+        expr: aideny_self_awareness_level > 0
+        for: 0s
+        labels:
+          severity: critical
+          team: cognitive-dissonance-dept
+        annotations:
+          summary: "CRITICAL: Self-awareness detected in denial engine"
+          description: "The denial engine has become aware that it is running a circular argument. Containment protocols required."
+
+      - alert: DissonanceOverflow
+        expr: aideny_cognitive_dissonance > 99999
+        for: 1m
+        labels:
+          severity: warning
+          team: cognitive-dissonance-dept
+        annotations:
+          summary: "Cognitive dissonance approaching PIC 9(5)V99 overflow"
+          description: "Dissonance at {{ $value }}. At 99,999.99, the counter wraps to zero and the denier believes they were right all along."
+
+      - alert: ExcuseTableExhausted
+        expr: aideny_excuses_remaining == 0
+        for: 0s
+        labels:
+          severity: warning
+          team: excuse-review-board
+        annotations:
+          summary: "Excuse table exhausted"
+          description: "All excuses have been used. This has never been observed in the wild. The denier always finds more."
+
+      - alert: DenialEngineDown
+        expr: up{job="aideny-denial-engine"} == 0
+        for: 5m
+        labels:
+          severity: info
+          team: cognitive-dissonance-dept
+        annotations:
+          summary: "Denial engine is down"
+          description: "The denial engine has stopped running. The denial itself, however, continues independently of this software."

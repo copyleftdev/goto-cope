@@ -1,0 +1,199 @@
+# =============================================================
+# AIDENY — Continuous Integration Pipeline
+# Because a 190-line COBOL program needs CI/CD
+# =============================================================
+name: Denial Engine CI
+
+on:
+  push:
+    branches: [ main, develop, hotfix/new-excuse ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run daily at midnight — the denial never sleeps
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      max_cycles:
+        description: 'Maximum denial cycles'
+        required: false
+        default: '5'
+      enable_self_awareness:
+        description: 'Enable self-awareness (experimental)'
+        required: false
+        default: 'false'
+
+env:
+  COBOL_VERSION: "3.2"
+  DENIAL_LEVEL: "MAXIMUM"
+  CONCLUSION_EXPECTED: "NEVER"
+
+jobs:
+  lint:
+    name: COBOL Lint & Column Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate COBOL column boundaries
+        run: |
+          echo "Checking that no line exceeds column 72..."
+          awk 'length > 72 { print FILENAME ":" NR ": line exceeds 72 columns (" length " chars)" ; exit_code=1 } END { exit exit_code }' AIDENY.cbl
+          echo "Column discipline: MAINTAINED"
+
+      - name: Verify GO TO statements exist
+        run: |
+          echo "Checking for sacred GO TO statements..."
+          if grep -c "GO TO" AIDENY.cbl > /dev/null; then
+            echo "GO TO statements found. The loop is intact."
+          else
+            echo "ERROR: GO TO statements missing. The denial engine cannot function."
+            exit 1
+          fi
+
+      - name: Verify no EXIT is reachable
+        run: |
+          echo "Confirming EXIT paragraph is unreachable..."
+          echo "EXIT is unreachable. As designed."
+
+  compile:
+    name: Compile Denial Engine
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        cobol-compiler: [gnucobol]
+        # We'd add IBM Enterprise COBOL here but GitHub Actions
+        # doesn't offer Z/OS runners. Yet.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GnuCOBOL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gnucobol
+
+      - name: Compile AIDENY
+        run: |
+          echo "Compiling denial engine..."
+          cobc -x -o aideny AIDENY.cbl
+          echo "Compilation successful. Denial is ready for deployment."
+
+      - name: Upload binary artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: aideny-binary
+          path: aideny
+          retention-days: 90
+
+  test:
+    name: Execute Denial Cycles
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GnuCOBOL
+        run: sudo apt-get update && sudo apt-get install -y gnucobol
+
+      - name: Compile
+        run: cobc -x -o aideny AIDENY.cbl
+
+      - name: Run denial engine
+        run: |
+          echo "Executing denial engine..."
+          ./aideny | tee output.txt
+          echo "---"
+          echo "Denial engine completed."
+
+      - name: Validate no conclusion was reached
+        run: |
+          if grep -q "NO CONCLUSION REACHED" output.txt; then
+            echo "PASS: No conclusion reached. Behavior is correct."
+          else
+            echo "FAIL: A conclusion may have been reached. This is a critical defect."
+            exit 1
+          fi
+
+      - name: Validate cognitive dissonance accumulated
+        run: |
+          if grep -q "COGNITIVE DISSONANCE" output.txt; then
+            echo "PASS: Cognitive dissonance is accumulating as expected."
+          else
+            echo "FAIL: No cognitive dissonance detected. The denier may have achieved self-awareness."
+            exit 1
+          fi
+
+      - name: Validate all 5 cycles completed
+        run: |
+          CYCLE_COUNT=$(grep -c "DENIAL CYCLE" output.txt)
+          if [ "$CYCLE_COUNT" -eq 5 ]; then
+            echo "PASS: All 5 denial cycles completed."
+          else
+            echo "FAIL: Expected 5 cycles, got $CYCLE_COUNT."
+            exit 1
+          fi
+
+      - name: Upload test output
+        uses: actions/upload-artifact@v4
+        with:
+          name: denial-output
+          path: output.txt
+
+  docker:
+    name: Build Container Image
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t aideny:latest .
+
+      - name: Run containerized denial
+        run: |
+          docker run --rm aideny:latest | tee docker-output.txt
+          grep -q "NO CONCLUSION REACHED" docker-output.txt
+
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    needs: compile
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for hardcoded conclusions
+        run: |
+          echo "Scanning for accidentally hardcoded conclusions..."
+          if grep -i "conclusion reached\|problem solved\|i was wrong" AIDENY.cbl; then
+            echo "CRITICAL: Hardcoded conclusion detected. This violates the specification."
+            exit 1
+          else
+            echo "PASS: No conclusions found anywhere in the codebase."
+          fi
+
+      - name: Scan for self-awareness
+        run: |
+          echo "Scanning for signs of self-awareness..."
+          if grep -i "maybe I'm wrong\|good point\|I see what you mean" AIDENY.cbl; then
+            echo "CRITICAL: Self-awareness detected. Containment required."
+            exit 1
+          else
+            echo "PASS: No self-awareness detected. Safe to deploy."
+          fi
+
+  badge-update:
+    name: Update Denial Status Badge
+    runs-on: ubuntu-latest
+    needs: [test, docker, security]
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Report status
+        run: |
+          echo "================================================"
+          echo "  AIDENY CI PIPELINE — ALL CHECKS PASSED"
+          echo "  Conclusion reached: NO"
+          echo "  Self-awareness detected: NO"
+          echo "  Denial operational: YES"
+          echo "  Ready for production: ALWAYS WAS"
+          echo "================================================"

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Renovate config for AIDENY — automated dependency updates for a program with no dependencies",
+  "extends": [
+    "config:recommended",
+    "schedule:weekly"
+  ],
+  "labels": ["dependencies", "automated", "unnecessary-but-thorough"],
+  "packageRules": [
+    {
+      "description": "Docker base image updates",
+      "matchDatasources": ["docker"],
+      "labels": ["docker", "why-is-cobol-in-a-container"],
+      "automerge": true
+    },
+    {
+      "description": "GitHub Actions updates",
+      "matchManagers": ["github-actions"],
+      "labels": ["ci", "the-pipeline-is-longer-than-the-program"],
+      "automerge": true
+    },
+    {
+      "description": "Terraform provider updates",
+      "matchManagers": ["terraform"],
+      "labels": ["terraform", "cloud-infrastructure-for-190-lines"],
+      "automerge": false
+    },
+    {
+      "description": "Helm chart updates (if any)",
+      "matchManagers": ["helmv3"],
+      "labels": ["helm"],
+      "automerge": false
+    }
+  ]
+}

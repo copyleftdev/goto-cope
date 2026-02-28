@@ -1,0 +1,21 @@
+# =============================================================
+# AIDENY — Hadolint Configuration
+# Dockerfile linting for containerized COBOL
+# =============================================================
+
+ignored:
+  # We pin ubuntu:24.04, not a SHA — we live dangerously
+  # (but not as dangerously as running circular reasoning in prod)
+  - DL3007
+
+  # Yes we use apt-get. This is Ubuntu. What did you expect.
+  - DL3008
+
+trustedRegistries:
+  - docker.io
+
+override:
+  warning:
+    # We know we should use COPY instead of ADD.
+    # We don't use ADD. But just in case.
+    - DL3020

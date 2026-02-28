@@ -1,0 +1,66 @@
+# =============================================================
+# AIDENY — Release Pipeline
+# Semantic versioning for a program that semantically means nothing
+# =============================================================
+name: Release Denial Engine
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GnuCOBOL
+        run: sudo apt-get update && sudo apt-get install -y gnucobol
+
+      - name: Compile for release
+        run: cobc -x -o aideny AIDENY.cbl
+
+      - name: Generate release notes
+        run: |
+          cat > RELEASE_NOTES.md << 'EOF'
+          ## What's New
+
+          - The denial loop still runs
+          - No conclusions were added
+          - Cognitive dissonance still accumulates
+          - EXIT is still unreachable
+
+          ## What's Fixed
+
+          - Nothing. There are no bugs. The program behaves
+            exactly as the argument it models: incorrectly,
+            but consistently.
+
+          ## Breaking Changes
+
+          - None. This program has never broken because it
+            has never worked toward a resolution in the first place.
+
+          ## Upgrade Guide
+
+          Replace the old binary with the new one. The denial
+          will continue uninterrupted. It always does.
+          EOF
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: RELEASE_NOTES.md
+          files: |
+            aideny
+            AIDENY.cbl
+            AIDENY.jcl
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

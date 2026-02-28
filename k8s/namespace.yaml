@@ -1,0 +1,17 @@
+# =============================================================
+# AIDENY — Kubernetes Namespace
+# A dedicated namespace for enterprise denial
+# =============================================================
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: denial-engine
+  labels:
+    app: aideny
+    purpose: circular-reasoning
+    conclusion: never
+    managed-by: cognitive-dissonance-dept
+  annotations:
+    description: "Dedicated namespace for the AI denial loop engine"
+    contact: "denial@aideny.cobol"
+    daniel-miessler-approved: "pending-since-2016"

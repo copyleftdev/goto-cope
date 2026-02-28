@@ -1,0 +1,45 @@
+# =============================================================
+# AIDENY — .gitattributes
+# Because even circular reasoning deserves consistent line endings
+# =============================================================
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# COBOL source files — the heart of the denial engine
+*.cbl text eol=lf linguist-language=COBOL
+*.cob text eol=lf linguist-language=COBOL
+*.cpy text eol=lf linguist-language=COBOL
+
+# JCL — the sacred job control language
+*.jcl text eol=lf linguist-language=JCL
+
+# Documentation (more lines than the actual program)
+*.md text eol=lf linguist-documentation
+
+# Docker
+Dockerfile text eol=lf linguist-language=Dockerfile
+
+# Terraform (yes, really)
+*.tf text eol=lf linguist-language=HCL
+
+# Kubernetes manifests
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# Shell scripts
+*.sh text eol=lf
+
+# Ensure the hero image is treated as binary
+*.png binary
+*.jpg binary
+
+# Force GitHub to classify this repo correctly
+# It's COBOL. It will always be COBOL.
+*.cbl linguist-detectable=true
+*.md linguist-documentation=true
+*.tf linguist-detectable=false
+*.yml linguist-detectable=false
+Makefile linguist-detectable=false
+Dockerfile linguist-detectable=false
+Vagrantfile linguist-detectable=false

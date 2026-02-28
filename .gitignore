@@ -1,0 +1,82 @@
+# =============================================================
+# AIDENY — .gitignore
+# Enterprise-grade ignore rules for a 190-line COBOL program
+# =============================================================
+
+# Compiled COBOL output
+*.o
+*.so
+*.exe
+*.int
+*.idy
+*.gnt
+aideny
+
+# GnuCOBOL intermediate files
+*.c.l[0-9]*
+*.c.h
+
+# IBM Z/OS artifacts (if you're actually running this on a mainframe,
+# we have questions but also respect)
+*.lst
+*.adt
+*.load
+*.obj
+SYSUT*
+
+# JCL spool output
+JESMSGLG
+JESJCL
+JESYSMSG
+
+# Environment files (your denial is your own business)
+.env
+.env.local
+.env.production
+.env.denial
+
+# Docker
+docker-compose.override.yml
+
+# Terraform state (the infrastructure of denial)
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# IDE files (we don't judge your editor, only your arguments)
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Coverage reports (there is nothing to cover — no tests can
+# validate a program that never reaches a conclusion)
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Helm chart packages
+*.tgz
+
+# Vagrant
+.vagrant/
+
+# Node modules (yes, someone will try to npm install this)
+node_modules/
+
+# Python venv (yes, someone will try to pip install this)
+venv/
+__pycache__/
+
+# The one file we will never generate
+CONCLUSION.md

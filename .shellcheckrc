@@ -1,0 +1,14 @@
+# =============================================================
+# AIDENY — ShellCheck Configuration
+# Linting rules for shell scripts in a COBOL project
+# =============================================================
+# There are no shell scripts in this project.
+# But if there were, they'd be linted.
+# That's the kind of project this is.
+
+# Allow sourcing from paths determined at runtime
+external-sources=true
+
+# We're aware that some vars look unused. They're used in COBOL.
+# ShellCheck doesn't know about COBOL. Few do.
+disable=SC2034

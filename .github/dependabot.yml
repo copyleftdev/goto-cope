@@ -1,0 +1,53 @@
+# =============================================================
+# AIDENY — Dependabot Configuration
+# Automated dependency updates for a program with zero dependencies
+# =============================================================
+#
+# COBOL has no package manager. COBOL needs no package manager.
+# COBOL has been dependency-free since 1959.
+#
+# But we added Docker, Terraform, GitHub Actions, and Helm,
+# so now we need Dependabot. This is called "progress."
+
+version: 2
+
+updates:
+  # GitHub Actions — the CI pipeline for 190 lines of COBOL
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Los_Angeles"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "ci"
+      - "unnecessary-but-thorough"
+
+  # Docker — because we containerized COBOL
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "docker"
+    labels:
+      - "dependencies"
+      - "docker"
+      - "why-is-cobol-in-a-container"
+
+  # Terraform — because we deployed COBOL to the cloud
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "infra"
+    labels:
+      - "dependencies"
+      - "terraform"
+      - "the-cloud-was-not-asked-for-this"

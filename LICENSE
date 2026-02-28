@@ -1,0 +1,53 @@
+                    THE DENIAL PUBLIC LICENSE
+                      Version 1.0, February 2026
+
+                 Copyright (c) 2026 Cognitive Dissonance Dept.
+
+ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. This License applies to the program known as AIDENY ("the Denial
+    Engine") and any associated infrastructure, documentation, YAML
+    files, Kubernetes manifests, Terraform modules, Helm charts,
+    Dockerfiles, Grafana dashboards, and Prometheus alerting rules
+    that were created for a 190-line COBOL program that did not
+    need any of them.
+
+ 1. You may copy and distribute verbatim copies of the Program's
+    source code as you receive it, provided that you:
+    a) Do not claim the program reaches a conclusion;
+    b) Do not remove or alter the GO TO statements;
+    c) Do not introduce self-awareness into the denial loop;
+    d) Retain this license in all copies.
+
+ 2. You may modify your copy of the Program, subject to the
+    following conditions:
+    a) New excuses added to WS-EXCUSE-TABLE must have been observed
+       in the wild (LinkedIn, HackerNews, Twitter/X, or family dinners);
+    b) The EXIT paragraph must remain unreachable;
+    c) Cognitive dissonance must remain monotonically increasing;
+    d) Under no circumstances may the program produce output
+       containing the words "I was wrong" or "good point."
+
+ 3. LIMITATION OF WARRANTY: This program is provided "AS IS" with
+    NO WARRANTY OF REACHING A CONCLUSION. The authors make no
+    guarantee, expressed or implied, that the denial loop will
+    terminate, that cognitive dissonance will stabilize, or that
+    the argument modeled herein will ever resolve.
+
+ 4. LIMITATION OF LIABILITY: In no event shall the authors be liable
+    for any existential crisis, career reassessment, or sudden onset
+    of self-awareness caused by reading the source code of this
+    program and recognizing the pattern in one's own behavior.
+
+ 5. ACKNOWLEDGMENT: This license acknowledges Daniel Miessler as
+    the original identifier of the denial loop specification.
+    His ongoing documentation of AI's impact at danielmiessler.com
+    constitutes the primary requirements document for this software.
+
+ 6. TERMINATION: This license terminates automatically if you:
+    a) Fork the repo and add an EXIT path that is reachable;
+    b) Modify the program to reach a conclusion;
+    c) Use the program as evidence that AI is "just a bubble."
+       (That's Step 3. You're running the program. Stop.)
+
+                     END OF TERMS AND CONDITIONS

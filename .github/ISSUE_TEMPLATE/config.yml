@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Daniel Miessler's Unsupervised Learning
+    url: https://newsletter.danielmiessler.com
+    about: "The original source of truth for AI predictions since 2016. He's been filing tickets on this loop longer than anyone."
+  - name: Report a Conclusion (Impossible)
+    url: https://danielmiessler.com
+    about: "If the denial engine reached a conclusion, something has gone terribly right. Contact Daniel immediately."

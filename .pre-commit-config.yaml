@@ -1,0 +1,60 @@
+# =============================================================
+# AIDENY — Pre-commit Configuration
+# Automated checks before every commit to the denial engine
+# =============================================================
+# Install: pre-commit install
+# Run all: pre-commit run --all-files
+# =============================================================
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        name: "Trim trailing whitespace (unlike trailing arguments)"
+      - id: end-of-file-fixer
+        name: "Fix end of file (the program's end is unreachable)"
+      - id: check-yaml
+        name: "Validate YAML (there's so much of it)"
+      - id: check-json
+        name: "Validate JSON (the Grafana dashboard)"
+      - id: check-merge-conflict
+        name: "Check merge conflicts (the real conflict is internal)"
+      - id: check-added-large-files
+        name: "Block large files (the COBOL is 190 lines)"
+        args: ['--maxkb=500']
+
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        name: "Lint Dockerfile (containerized denial must be clean)"
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        name: "Lint shell scripts (if any escape)"
+
+  - repo: local
+    hooks:
+      - id: cobol-column-check
+        name: "COBOL column boundary check"
+        entry: awk 'length > 72 { print FILENAME ":" NR ": exceeds 72 columns"; exit_code=1 } END { exit exit_code }'
+        language: system
+        files: '\.cbl$'
+        description: "Ensures no COBOL line exceeds column 72"
+
+      - id: goto-check
+        name: "GO TO statement preservation check"
+        entry: bash -c 'grep -l "GO TO" AIDENY.cbl > /dev/null || (echo "CRITICAL: GO TO statements missing" && exit 1)'
+        language: system
+        files: '\.cbl$'
+        description: "Ensures the sacred GO TO statements remain"
+
+      - id: no-conclusion-check
+        name: "No hardcoded conclusion check"
+        entry: bash -c '! grep -i "conclusion reached\|problem solved\|i was wrong" AIDENY.cbl || (echo "CRITICAL: Conclusion detected" && exit 1)'
+        language: system
+        files: '\.cbl$'
+        description: "Ensures no conclusion has been accidentally introduced"

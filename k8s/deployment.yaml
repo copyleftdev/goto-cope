@@ -1,0 +1,63 @@
+# =============================================================
+# AIDENY — Kubernetes Deployment
+# Running 3 replicas of denial for high availability
+# =============================================================
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aideny
+  namespace: denial-engine
+  labels:
+    app: aideny
+    version: v1.0.0
+  annotations:
+    kubernetes.io/description: "Enterprise denial engine - 3 replicas for HA cope"
+spec:
+  replicas: 3
+  # Three replicas, because if one pod's denial falters,
+  # the others keep the loop running. Fault-tolerant cope.
+  selector:
+    matchLabels:
+      app: aideny
+  template:
+    metadata:
+      labels:
+        app: aideny
+        version: v1.0.0
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+        - name: aideny
+          image: aideny:latest
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              # The denial engine needs almost nothing.
+              # Unlike the argument, which consumes everything.
+              cpu: "10m"
+              memory: "16Mi"
+            limits:
+              cpu: "100m"
+              memory: "64Mi"
+          envFrom:
+            - configMapRef:
+                name: aideny-config
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      restartPolicy: Always
+      # RestartPolicy: Always — because the denial never stops.
+      # If the pod crashes, it restarts and re-enters the loop.
+      # This is both a Kubernetes feature and a metaphor.
+      terminationGracePeriodSeconds: 5
+      # 5 seconds to terminate. More grace than the argument gives
+      # to opposing viewpoints.

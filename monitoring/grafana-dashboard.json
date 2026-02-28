@@ -1,0 +1,122 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "title": "Daniel Miessler - Unsupervised Learning",
+      "url": "https://danielmiessler.com",
+      "type": "link",
+      "icon": "external link",
+      "tooltip": "The original specification author"
+    }
+  ],
+  "panels": [
+    {
+      "id": 1,
+      "title": "Denial Cycles (Total)",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 100 },
+              { "color": "red", "value": 1000 }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "area" },
+      "targets": [{ "expr": "aideny_denial_cycles_total", "legendFormat": "Cycles" }]
+    },
+    {
+      "id": 2,
+      "title": "Cognitive Dissonance Level",
+      "type": "gauge",
+      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 200 },
+              { "color": "orange", "value": 500 },
+              { "color": "red", "value": 1000 },
+              { "color": "dark-red", "value": 5000 }
+            ]
+          },
+          "max": 99999.99,
+          "unit": "short"
+        }
+      },
+      "options": { "showThresholdLabels": true },
+      "targets": [{ "expr": "aideny_cognitive_dissonance", "legendFormat": "Dissonance" }]
+    },
+    {
+      "id": 3,
+      "title": "Conclusions Reached",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "green", "mode": "fixed" },
+          "unit": "short",
+          "noValue": "0 (as designed)"
+        }
+      },
+      "targets": [{ "expr": "aideny_conclusion_reached", "legendFormat": "Conclusions" }],
+      "description": "This panel should always read 0. If it doesn't, file a P0 incident."
+    },
+    {
+      "id": 4,
+      "title": "Self-Awareness Level",
+      "type": "stat",
+      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 0 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "fixedColor": "green", "mode": "fixed" },
+          "unit": "short",
+          "noValue": "0 (contained)"
+        }
+      },
+      "targets": [{ "expr": "aideny_self_awareness_level", "legendFormat": "Self-Awareness" }],
+      "description": "Should always be 0. Non-zero values require immediate containment."
+    },
+    {
+      "id": 5,
+      "title": "Dissonance Over Time",
+      "type": "timeseries",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "lineWidth": 2, "fillOpacity": 20, "drawStyle": "line" }
+        }
+      },
+      "targets": [{ "expr": "aideny_cognitive_dissonance", "legendFormat": "Dissonance" }],
+      "description": "Monotonically increasing. Always. Just like the real thing."
+    },
+    {
+      "id": 6,
+      "title": "Excuse Distribution",
+      "type": "piechart",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
+      "targets": [{ "expr": "aideny_excuse_usage_total", "legendFormat": "{{ excuse }}" }],
+      "description": "Which excuses are used most frequently. In production, 'it's just a bubble' leads."
+    }
+  ],
+  "schemaVersion": 39,
+  "tags": ["aideny", "denial", "cobol", "circular-reasoning"],
+  "templating": { "list": [] },
+  "time": { "from": "now-24h", "to": "now" },
+  "title": "AIDENY — Denial Engine Dashboard",
+  "uid": "aideny-denial-dashboard",
+  "version": 1
+}

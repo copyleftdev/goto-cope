@@ -1,0 +1,30 @@
+# =============================================================
+# AIDENY — Prometheus Configuration
+# Monitoring a program that does nothing, beautifully
+# =============================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+rule_files:
+  - "alert-rules.yml"
+
+scrape_configs:
+  - job_name: "aideny-denial-engine"
+    static_configs:
+      - targets: ["aideny:9090"]
+        labels:
+          app: "aideny"
+          purpose: "circular-reasoning"
+          conclusion: "never"
+    # Scrape every 15 seconds. The metrics won't change
+    # (the program exits immediately), but we scrape anyway.
+    # This is called "observability."
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+    # Prometheus monitoring itself monitoring nothing.
+    # Turtles all the way down.

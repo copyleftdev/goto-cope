@@ -1,0 +1,23 @@
+# =============================================================
+# AIDENY — Kubernetes Service
+# Exposing the denial engine to the cluster
+# (it was already exposed on LinkedIn, this is just formality)
+# =============================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: aideny
+  namespace: denial-engine
+  labels:
+    app: aideny
+  annotations:
+    description: "ClusterIP service for the denial engine. Nobody asked for this."
+spec:
+  type: ClusterIP
+  selector:
+    app: aideny
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 9090
+      targetPort: 9090

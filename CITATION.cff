@@ -1,0 +1,42 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "AIDENY: Enterprise-Grade Circular Reasoning Engine"
+abstract: >-
+  A COBOL implementation of the AI denial loop pattern identified
+  by Daniel Miessler. The program faithfully models the circular
+  reasoning observed in AI discourse since 2023, where prior beliefs
+  are converted to conclusions, evidence is ignored, and excuses
+  are generated in an infinite loop. The program is guaranteed to
+  never reach a conclusion.
+type: software
+version: 1.0.0
+date-released: "2026-02-27"
+license: LicenseRef-DPL-1.0
+repository-code: "https://github.com/cognitive-dissonance-dept/aideny"
+keywords:
+  - cobol
+  - satire
+  - circular-reasoning
+  - cognitive-dissonance
+  - ai-denial
+  - enterprise-comedy
+  - mainframe
+  - ibm-z8
+authors:
+  - name: "Cognitive Dissonance Dept."
+    email: "denial@aideny.cobol"
+references:
+  - type: article
+    title: "Everything I've Said About AI Since 2016: A Retrospective"
+    authors:
+      - family-names: "Miessler"
+        given-names: "Daniel"
+    url: "https://danielmiessler.com/blog/my-ai-predictions-retrospective"
+    year: 2026
+  - type: article
+    title: "The AI Creative Destruction Wave"
+    authors:
+      - family-names: "Miessler"
+        given-names: "Daniel"
+    url: "https://danielmiessler.com/blog/ai-creative-destruction-wave"
+    year: 2025

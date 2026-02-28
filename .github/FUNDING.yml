@@ -1,0 +1,11 @@
+# =============================================================
+# AIDENY — Funding
+# Supporting the denial engine's operational costs
+# (there are none, but the infrastructure implies otherwise)
+# =============================================================
+
+github: danielmiessler
+
+custom:
+  - https://danielmiessler.com
+  - https://newsletter.danielmiessler.com

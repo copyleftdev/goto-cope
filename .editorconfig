@@ -1,0 +1,75 @@
+# =============================================================
+# AIDENY — .editorconfig
+# Enforcing column discipline since 1959
+# =============================================================
+
+root = true
+
+# Global defaults
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# COBOL source files
+# Columns 1-6:   Sequence number area (we leave blank like professionals)
+# Column 7:      Indicator area (* for comments, / for page break)
+# Columns 8-11:  Area A (division, section, paragraph headers)
+# Columns 12-72: Area B (statements, the actual cope)
+# Columns 73-80: Identification area (optional, like self-awareness)
+[*.{cbl,cob,cpy}]
+indent_size = 7
+max_line_length = 72
+tab_width = 7
+
+# JCL — 80 columns, no exceptions, no excuses
+# (unlike the program itself, which is ALL excuses)
+[*.jcl]
+indent_size = 2
+max_line_length = 80
+
+# Markdown — where the documentation exceeds the code 10:1
+[*.md]
+indent_size = 2
+trim_trailing_whitespace = false
+max_line_length = 100
+
+# YAML — for the Kubernetes manifests this program does not need
+[*.{yml,yaml}]
+indent_size = 2
+
+# Terraform — for the cloud infrastructure this program does not need
+[*.tf]
+indent_size = 2
+
+# Makefile — tabs only, like the old gods intended
+[Makefile]
+indent_style = tab
+indent_size = 4
+
+# Dockerfile — because containerizing COBOL is a choice
+[Dockerfile]
+indent_size = 4
+
+# Vagrantfile — Ruby, technically
+[Vagrantfile]
+indent_size = 2
+
+# Shell scripts
+[*.sh]
+indent_size = 2
+
+# JSON configs
+[*.json]
+indent_size = 2
+
+# TOML configs
+[*.toml]
+indent_size = 2
+
+# Helm templates
+[templates/*.yaml]
+indent_size = 2

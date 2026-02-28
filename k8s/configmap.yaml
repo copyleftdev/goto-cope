@@ -1,0 +1,21 @@
+# =============================================================
+# AIDENY — Kubernetes ConfigMap
+# Runtime configuration for the denial engine
+# =============================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aideny-config
+  namespace: denial-engine
+  labels:
+    app: aideny
+data:
+  MAX_CYCLES: "5"
+  INITIAL_DISSONANCE: "0"
+  EXCUSE_STRATEGY: "sequential"
+  ENABLE_HEADLINES: "true"
+  LOG_LEVEL: "DENIAL"
+  # These are parsed but ignored at runtime
+  ENABLE_SELF_AWARENESS: "false"
+  ACKNOWLEDGE_REALITY: "false"
+  REACH_CONCLUSION: "false"

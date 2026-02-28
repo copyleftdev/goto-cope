@@ -1,0 +1,72 @@
+# =============================================================
+# AIDENY — Docker Compose
+# Full observability stack for a program that does nothing
+# =============================================================
+# Services:
+#   - aideny:      The denial engine (the only one that matters)
+#   - prometheus:  Monitors the denial (it never changes)
+#   - grafana:     Dashboards for the denial (beautiful and pointless)
+# =============================================================
+
+services:
+  aideny:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aideny-denial-engine
+    restart: "no"
+    labels:
+      - "app=aideny"
+      - "component=denial-engine"
+      - "conclusion=never"
+    networks:
+      - denial-network
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    container_name: aideny-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert-rules.yml:/etc/prometheus/alert-rules.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=365d'
+      # Retain metrics for a year. The denial will outlast the storage.
+    networks:
+      - denial-network
+    depends_on:
+      - aideny
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: aideny-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=copium
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/denial-dashboard.json
+    volumes:
+      - ./monitoring/grafana-dashboard.json:/var/lib/grafana/dashboards/denial-dashboard.json:ro
+      - ./monitoring/grafana-datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml:ro
+      - ./monitoring/grafana-dashboard-provider.yml:/etc/grafana/provisioning/dashboards/provider.yml:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - denial-network
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  denial-network:
+    name: denial-network
+    driver: bridge

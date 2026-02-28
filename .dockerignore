@@ -1,0 +1,36 @@
+# =============================================================
+# AIDENY — .dockerignore
+# Keep the container lean (unlike the argument)
+# =============================================================
+
+.git
+.github
+.vagrant
+.terraform
+*.tfstate*
+k8s/
+terraform/
+helm/
+monitoring/
+docs/
+*.md
+!README.md
+LICENSE
+Makefile
+Vagrantfile
+Brewfile
+*.tgz
+.env
+.env.*
+.editorconfig
+.mailmap
+.gitattributes
+.pre-commit-config.yaml
+.hadolint.yaml
+.shellcheckrc
+.tool-versions
+sonar-project.properties
+renovate.json
+CITATION.cff
+docker-compose.yml
+aideny

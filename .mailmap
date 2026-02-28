@@ -1,0 +1,13 @@
+# =============================================================
+# AIDENY — .mailmap
+# Canonical author mapping for the Cognitive Dissonance Dept.
+# =============================================================
+#
+# Because even in git blame, nobody wants to take credit
+# for the argument this program models.
+#
+# Format: Canonical Name <canonical@email> Commit Name <commit@email>
+#
+Cognitive Dissonance Dept. <denial@aideny.cobol> COBOL Mainframe <root@ibm-z8.local>
+Cognitive Dissonance Dept. <denial@aideny.cobol> Anonymous Denier <goto1@linkedin.com>
+Daniel Miessler <daniel@danielmiessler.com> The One Who Noticed <tickets@since2016.com>

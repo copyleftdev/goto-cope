@@ -1,0 +1,10 @@
+# =============================================================
+# AIDENY — .tool-versions (asdf version manager)
+# Pinned tool versions for reproducible denial
+# =============================================================
+# Yes, we're pinning tool versions for a COBOL program.
+# Reproducibility matters, even when the output is always the same.
+
+terraform 1.7.4
+helm 3.14.2
+kubectl 1.29.2

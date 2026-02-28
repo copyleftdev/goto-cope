@@ -1,0 +1,47 @@
+# =============================================================
+# AIDENY — Horizontal Pod Autoscaler
+# Auto-scaling denial based on CPU usage
+# (it will never scale because the program exits immediately,
+#  but the YAML exists and that's what matters)
+# =============================================================
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: aideny-hpa
+  namespace: denial-engine
+  labels:
+    app: aideny
+  annotations:
+    description: "Scales denial pods between 3-10 based on cognitive load"
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: aideny
+  minReplicas: 3
+  maxReplicas: 10
+  # Min 3 replicas: one for each step of the denial loop
+  # Max 10: one for each excuse, plus five for the feelings
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60
+      policies:
+        - type: Pods
+          value: 2
+          periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      # 5 minutes before scaling down.
+      # The denial engine is slow to let go.
+      # Much like the argument it models.
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 120
